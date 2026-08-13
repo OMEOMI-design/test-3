@@ -1,0 +1,6 @@
+{
+  "name": "OME Home - Odor Neutralizing Home Fragrance",
+  "description": "Official website for OME Home featuring Odor Trap™ technology, brand story, product catalog, and impact.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

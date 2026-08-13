@@ -1,0 +1,662 @@
+import React, { useState } from 'react';
+import { Product, NavTab } from '../types';
+
+interface CatalogViewProps {
+  products: Product[];
+  onSelectProduct: (product: Product) => void;
+  setActiveTab: (tab: NavTab) => void;
+  onOpenOrderModal: () => void;
+}
+
+export const CatalogView: React.FC<CatalogViewProps> = ({
+  products,
+  onSelectProduct,
+  setActiveTab,
+  onOpenOrderModal,
+}) => {
+  const pureProduct = products.find((p) => p.id === 'ome-home-general') || products[0];
+  const freshProduct = products.find((p) => p.id === 'ome-home-tinkerbell') || products[1];
+
+  const [activeSpaceIndex, setActiveSpaceIndex] = useState(0);
+
+  const spaceSolutions = [
+    {
+      id: 'bep',
+      num: '01',
+      title: 'BẾP',
+      subtitle: 'Mùi thức ăn • Dầu mỡ • Gia vị',
+      desc: 'Trả lại sự trung tính cho không gian bếp sau khi nấu nướng. Loại bỏ triệt để mùi tanh chiên xào.',
+      recommend: 'PURE',
+      image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80',
+    },
+    {
+      id: 'phongkhach',
+      num: '02',
+      title: 'PHÒNG KHÁCH',
+      subtitle: 'Vải vóc • Thú cưng • Sinh hoạt',
+      desc: 'Cho không gian cà phê gia đình quây quần và tiếp khách luôn thoáng đãng, thư thái.',
+      recommend: 'FRESH',
+      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
+    },
+    {
+      id: 'phongngu',
+      num: '03',
+      title: 'PHÒNG NGỦ',
+      subtitle: 'Chăn đệm • Vải • Không gian kín',
+      desc: 'Một môi trường hương nhẹ nhàng hơn cho không gian riêng tư, ngon giấc hơn.',
+      recommend: 'FRESH',
+      image: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=800&q=80',
+    },
+    {
+      id: 'phongtam',
+      num: '04',
+      title: 'PHÒNG TẮM',
+      subtitle: 'Ẩm mốc • Mùi không gian kín',
+      desc: 'Giải quyết triệt để vấn đề mùi trong môi trường ẩm ướt mà không làm át bằng hương gắt.',
+      recommend: 'PURE',
+      image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80',
+    },
+    {
+      id: 'thucung',
+      num: '05',
+      title: 'KHU VỰC THÚ CƯNG',
+      subtitle: 'Ô nằm • Khu vệ sinh • Mùi đặc trưng',
+      desc: 'Giải pháp kiểm soát mùi dành cho không gian bạn và thú cưng chia sẻ. Dịu nhẹ cho khứu giác nhạy cảm.',
+      recommend: 'PURE',
+      image: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=800&q=80',
+    },
+  ];
+
+  return (
+    <div className="w-full bg-[#faf9f5] text-[#1b1c1d]">
+      {/* 1. HERO SECTION */}
+      <section className="relative w-full border-b border-[#e5e2d9] bg-[#f5f4f0] overflow-hidden">
+        <div className="max-w-[1380px] mx-auto px-4 md:px-12 py-12 md:py-20 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          
+          {/* Left Text Column */}
+          <div className="lg:col-span-7 space-y-6">
+            <div className="inline-flex items-center space-x-2">
+              <span className="w-2 h-2 rounded-full bg-[#1b1c1d]"></span>
+              <span className="font-label-md text-[10px] md:text-xs tracking-[0.25em] text-[#6b6e77] uppercase font-semibold">
+                OME HOME – ADVANCED ODOR CARE
+              </span>
+            </div>
+
+            <h1 className="font-headline text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#1b1c1d] leading-[1.1]">
+              KHÔNG CHE MÙI.<br />
+              <span className="font-headline italic font-normal text-3xl sm:text-4xl lg:text-5xl text-[#525560]">
+                XỬ LÝ MÙI.
+              </span>
+            </h1>
+
+            <p className="font-body-lg text-sm sm:text-base text-[#434653] max-w-xl leading-relaxed">
+              Giải pháp kiểm soát mùi cho không gian sống hiện đại — chọn không hương với <strong className="text-[#1b1c1d]">OME Home Pure</strong> hoặc trải nghiệm hương tinh tế với <strong className="text-[#1b1c1d]">OME Home Fresh</strong>.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-4 pt-2">
+              <button
+                onClick={() => onSelectProduct(pureProduct)}
+                className="bg-[#1b1c1d] text-white font-label-md text-xs font-semibold px-6 py-3.5 rounded-xs hover:bg-[#333] transition-colors uppercase tracking-widest cursor-pointer shadow-xs"
+              >
+                KHÁM PHÁ PURE
+              </button>
+              <button
+                onClick={() => onSelectProduct(freshProduct)}
+                className="border border-[#1b1c1d] text-[#1b1c1d] font-label-md text-xs font-semibold px-6 py-3.5 rounded-xs hover:bg-[#1b1c1d] hover:text-white transition-colors uppercase tracking-widest cursor-pointer"
+              >
+                KHÁM PHÁ FRESH
+              </button>
+            </div>
+
+            <div className="pt-6 border-t border-[#e5e2d9]/80 flex items-center space-x-6 text-[11px] font-label-md text-[#6b6e77] tracking-widest uppercase">
+              <span>ODOR CONTROL</span>
+              <span>•</span>
+              <span>BEAUTIFULLY DESIGNED</span>
+              <span>•</span>
+              <span>SCIENCE-LED</span>
+            </div>
+          </div>
+
+          {/* Right Product Renders Pedestal */}
+          <div className="lg:col-span-5 relative flex items-center justify-center p-4">
+            <div className="relative w-full max-w-md aspect-[4/5] bg-gradient-to-b from-[#ebe8e1] to-[#dedad0] rounded-2xl border border-[#d8d4c7] p-6 shadow-sm flex flex-col items-center justify-center overflow-hidden group">
+
+
+              <img
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4nBTYebqMXtMr_T-ldW5rTMnx-xrpTxL_yODQuvPIJpabNeUCxorReMZOnnbxr1puAgbY1XvPI2C6O41ghaL1ZTDrGLI_p3D04qd26pK_URFdsEflhKm458hgryGuL9TkjCMBcavZJA8go2JbDX4EZ7eBrV1Tr_Yrevo1Y-OJPNs_YidKIpo0oMQHoI4OKE3AjpQ3A_WPSohKCzSXZhKJF9yMZAZHzFjwNV8AKmlfc0gjIAQNvsVwJXqkXkwVeEhm4b8"
+                alt="OME Home Pure and Fresh Bottles"
+                className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105 filter drop-shadow-md"
+              />
+
+              <div className="absolute bottom-4 inset-x-4 text-center bg-white/70 backdrop-blur-xs py-2 px-3 rounded-xs border border-white/50">
+                <p className="font-label-md text-[11px] text-[#1b1c1d] uppercase tracking-wider">
+                  Công nghệ kiểm soát phân tử mùi Odor Trap™
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 2. THE OME APPROACH / OUR MANIFESTO */}
+      <section className="w-full max-w-[1380px] mx-auto px-4 md:px-12 py-16 md:py-24 border-b border-[#e5e2d9]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <div className="lg:col-span-6 space-y-6">
+            <span className="font-label-md text-xs tracking-[0.2em] text-[#6b6e77] uppercase">
+              THE OME APPROACH / TRIẾT LÝ
+            </span>
+            <h2 className="font-headline text-3xl sm:text-4xl font-bold text-[#1b1c1d] leading-tight">
+              MÙI KHÔNG NÊN ĐƯỢC GIẤU ĐI.<br />
+              <span className="italic font-normal text-[#525560]">It should be addressed.</span>
+            </h2>
+            <p className="font-body-md text-sm sm:text-base text-[#434653] leading-relaxed">
+              Phần lớn các sản phẩm tạo hương thông thường bắt đầu bằng việc bổ sung một mùi hương mới nồng nặc để lấn át mùi hôi sẵn có. OME Home bắt đầu từ một câu hỏi khác: <em className="text-[#1b1c1d] font-medium">làm thế nào để xử lý triệt để phân tử mùi không mong muốn trước tiên?</em>
+            </p>
+            <p className="font-body-md text-sm sm:text-base text-[#434653] leading-relaxed">
+              Đó là lý do mọi sản phẩm OME Home đều được xây dựng xung quanh nền tảng công nghệ kiểm soát phân tử mùi — sau đó bạn quyết định điều gì sẽ ở lại: <strong className="text-[#1b1c1d]">không hương thuần khiết với PURE</strong>, hay <strong className="text-[#1b1c1d]">một lớp hương thảo mộc tinh tế với FRESH</strong>.
+            </p>
+          </div>
+
+          <div className="lg:col-span-6 bg-[#f0eee6] rounded-2xl border border-[#dedad0] p-8 md:p-10 space-y-8 relative overflow-hidden">
+            <div className="flex items-center justify-between border-b border-[#d8d4c7] pb-4">
+              <span className="font-label-md text-xs text-[#1b1c1d] font-bold uppercase tracking-wider">
+                MÔ HÌNH XỬ LÝ KHÔNG CHE PHỦ
+              </span>
+              <span className="text-xs text-[#6b6e77]">Odor Trap™ Science</span>
+            </div>
+
+            <div className="grid grid-cols-3 gap-4 text-center">
+              <div className="bg-white p-4 rounded-xl border border-[#dedad0] space-y-2">
+                <span className="material-symbols-outlined text-2xl text-[#1b1c1d]">coronavirus</span>
+                <p className="font-label-md text-xs font-bold text-[#1b1c1d]">XỬ LÝ TỪ GỐC</p>
+                <p className="text-[11px] text-[#6b6e77]">Tập trung phân hủy phân tử hôi</p>
+              </div>
+
+              <div className="bg-white p-4 rounded-xl border border-[#dedad0] space-y-2">
+                <span className="material-symbols-outlined text-2xl text-[#1b1c1d]">block</span>
+                <p className="font-label-md text-xs font-bold text-[#1b1c1d]">KHÔNG CHE PHỦ</p>
+                <p className="text-[11px] text-[#6b6e77]">Không làm nồng hay át mùi</p>
+              </div>
+
+              <div className="bg-white p-4 rounded-xl border border-[#dedad0] space-y-2">
+                <span className="material-symbols-outlined text-2xl text-[#1b1c1d]">balance</span>
+                <p className="font-label-md text-xs font-bold text-[#1b1c1d]">CÂN BẰNG</p>
+                <p className="text-[11px] text-[#6b6e77]">Không gian trở lại tinh khiết</p>
+              </div>
+            </div>
+
+            <div className="text-center pt-2">
+              <button
+                onClick={() => setActiveTab('about')}
+                className="font-label-md text-xs text-[#1b1c1d] underline hover:text-[#003686] transition-colors cursor-pointer uppercase tracking-wider"
+              >
+                Đọc thêm về triết lý OME Home →
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 3. MỘT NỀN TẢNG. HAI TRẢI NGHIỆM. (Dual Cards) */}
+      <section className="w-full max-w-[1380px] mx-auto px-4 md:px-12 py-16 md:py-24 border-b border-[#e5e2d9]">
+        <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
+          <span className="font-label-md text-xs tracking-[0.25em] text-[#6b6e77] uppercase">
+            SẢN PHẨM CỐT LÕI
+          </span>
+          <h2 className="font-headline text-3xl md:text-4xl font-bold text-[#1b1c1d]">
+            MỘT NỀN TẢNG. HAI TRẢI NGHIỆM.
+          </h2>
+          <p className="font-body-md text-sm text-[#434653]">
+            Cùng công nghệ triệt tiêu phân tử mùi độc quyền, được thiết kế cho hai nhu cầu không gian sống khác nhau.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          
+          {/* Card 1: PURE */}
+          <div
+            onClick={() => onSelectProduct(pureProduct)}
+            className="bg-white rounded-2xl border border-[#e5e2d9] overflow-hidden p-8 md:p-10 flex flex-col justify-between hover:shadow-xl transition-all duration-300 group cursor-pointer relative"
+          >
+            <div className="space-y-4">
+              <span className="inline-block font-label-md text-[11px] font-bold uppercase tracking-widest text-[#003686] bg-[#e8f0fe] px-3 py-1 rounded-full">
+                OME HOME PURE
+              </span>
+              <h3 className="font-headline text-2xl md:text-3xl font-bold text-[#1b1c1d]">
+                KHÔNG HƯƠNG.
+              </h3>
+              <p className="font-body-md text-sm text-[#434653] leading-relaxed">
+                Dành cho những không gian cần giảm mùi không mong muốn mà không muốn bổ sung thêm bất kỳ hương liệu nào. Lý tưởng cho người nhạy cảm với mùi hương, nhà có trẻ nhỏ, thú cưng hoặc không gian tối giản.
+              </p>
+
+              <div className="flex flex-wrap gap-2 pt-2">
+                <span className="font-label-md text-[10px] bg-[#f5f4f0] text-[#1b1c1d] px-2.5 py-1 rounded-xs border border-[#dedad0]">
+                  NO ADDED FRAGRANCE
+                </span>
+                <span className="font-label-md text-[10px] bg-[#f5f4f0] text-[#1b1c1d] px-2.5 py-1 rounded-xs border border-[#dedad0]">
+                  ODOR CONTROL
+                </span>
+                <span className="font-label-md text-[10px] bg-[#f5f4f0] text-[#1b1c1d] px-2.5 py-1 rounded-xs border border-[#dedad0]">
+                  50 ML • 50.000 ₫
+                </span>
+              </div>
+            </div>
+
+            <div className="my-8 relative h-64 w-full flex items-center justify-center bg-[#f7f6f2] rounded-xl overflow-hidden border border-[#dedad0]">
+              <img
+                src={pureProduct.image}
+                alt="OME Home Pure"
+                className="h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+
+            <div className="flex items-center justify-between pt-4 border-t border-[#e5e2d9]">
+              <span className="font-label-md text-xs font-bold text-[#1b1c1d] uppercase tracking-wider group-hover:text-[#003686] transition-colors">
+                EXPLORE PURE →
+              </span>
+              <span className="font-headline text-lg font-bold text-[#1b1c1d]">
+                50.000 ₫
+              </span>
+            </div>
+          </div>
+
+          {/* Card 2: FRESH */}
+          <div
+            onClick={() => onSelectProduct(freshProduct)}
+            className="bg-[#212322] text-white rounded-2xl border border-[#383a39] overflow-hidden p-8 md:p-10 flex flex-col justify-between hover:shadow-2xl transition-all duration-300 group cursor-pointer relative"
+          >
+            <div className="space-y-4">
+              <span className="inline-block font-label-md text-[11px] font-bold uppercase tracking-widest text-[#e8c872] bg-[#332f1d] px-3 py-1 rounded-full">
+                OME HOME FRESH
+              </span>
+              <h3 className="font-headline text-2xl md:text-3xl font-bold text-white">
+                XỬ LÝ MÙI TRƯỚC.<br />HƯƠNG THƠM SAU.
+              </h3>
+              <p className="font-body-md text-sm text-[#b2b5bd] leading-relaxed">
+                Cùng triết lý kiểm soát mùi triệt để của OME, được hoàn thiện bằng lớp hương thảo mộc Vườn Thượng Uyển tự nhiên thanh dịu. Tươi mới, cân bằng và không gây nồng gắt.
+              </p>
+
+              <div className="flex flex-wrap gap-2 pt-2">
+                <span className="font-label-md text-[10px] bg-[#2e302f] text-[#dedad0] px-2.5 py-1 rounded-xs border border-[#444645]">
+                  ODOR CONTROL
+                </span>
+                <span className="font-label-md text-[10px] bg-[#2e302f] text-[#dedad0] px-2.5 py-1 rounded-xs border border-[#444645]">
+                  REFINED SCENT FINISH
+                </span>
+                <span className="font-label-md text-[10px] bg-[#2e302f] text-[#dedad0] px-2.5 py-1 rounded-xs border border-[#444645]">
+                  50 ML • 70.000 ₫
+                </span>
+              </div>
+            </div>
+
+            <div className="my-8 relative h-64 w-full flex items-center justify-center bg-[#181919] rounded-xl overflow-hidden border border-[#333534]">
+              <img
+                src={freshProduct.image}
+                alt="OME Home Fresh"
+                className="h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+
+            <div className="flex items-center justify-between pt-4 border-t border-[#383a39]">
+              <span className="font-label-md text-xs font-bold text-white uppercase tracking-wider group-hover:text-[#e8c872] transition-colors">
+                EXPLORE FRESH →
+              </span>
+              <span className="font-headline text-lg font-bold text-white">
+                70.000 ₫
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 4. DARK CONTRAST SECTION: PERFUME COVERS. OME CONTROLS. */}
+      <section className="w-full bg-[#18191a] text-white py-16 md:py-24 border-b border-[#2d3032]">
+        <div className="max-w-[1380px] mx-auto px-4 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <div className="lg:col-span-5 space-y-6">
+            <span className="font-label-md text-xs tracking-[0.25em] text-[#a0a4b0] uppercase">
+              SO SÁNH CƠ CHẾ
+            </span>
+            <h2 className="font-headline text-3xl sm:text-4xl font-bold text-white leading-tight">
+              PERFUME COVERS.<br />
+              <span className="italic font-normal text-[#a0a4b0]">OME CONTROLS.</span>
+            </h2>
+            <p className="font-body-md text-sm text-[#b2b5bd] leading-relaxed">
+              Khác biệt bắt đầu từ cách chúng ta nhìn nhận mùi. Nước hoa xịt phòng thông thường tạo lớp sương hương nồng lấp đầy căn phòng, khiến khứu giác mệt mỏi vì phải chịu đựng đồng thời cả mùi hôi và mùi thơm.
+            </p>
+            <p className="font-body-md text-sm text-[#b2b5bd] leading-relaxed">
+              OME Odor Care tiếp cận khoa học hơn: phân tử Odor Trap™ bám chặt và làm đứt gãy cấu trúc của phân tử hôi, giải phóng môi trường không khí sạch thực sự.
+            </p>
+            <div>
+              <button
+                onClick={onOpenOrderModal}
+                className="bg-white text-[#18191a] font-label-md text-xs font-semibold px-6 py-3 rounded-xs hover:bg-[#dedad0] transition-colors uppercase tracking-widest cursor-pointer"
+              >
+                TƯ VẤN & ĐẶT HÀNG
+              </button>
+            </div>
+          </div>
+
+          <div className="lg:col-span-7 bg-[#232527] rounded-2xl border border-[#383b3e] p-6 sm:p-8 space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              
+              {/* Conventional Fragrance */}
+              <div className="bg-[#18191a] p-6 rounded-xl border border-[#333639] space-y-4">
+                <span className="font-label-md text-[10px] text-[#e06c75] font-bold uppercase tracking-wider block">
+                  XỊT PHÒNG THÔNG THƯỜNG (CHE MÙI)
+                </span>
+                <div className="space-y-2 text-xs text-[#b2b5bd]">
+                  <p className="flex items-center space-x-2">
+                    <span className="material-symbols-outlined text-sm text-[#e06c75]">remove_circle</span>
+                    <span>Phân tử mùi hôi vẫn nguyên vẹn</span>
+                  </p>
+                  <p className="flex items-center space-x-2">
+                    <span className="material-symbols-outlined text-sm text-[#e06c75]">add_circle</span>
+                    <span>Thêm hương nhân tạo đậm đặc</span>
+                  </p>
+                  <p className="flex items-center space-x-2">
+                    <span className="material-symbols-outlined text-sm text-[#e06c75]">warning</span>
+                    <span>Khứu giác phải ngửi cả 2 mùi cùng lúc</span>
+                  </p>
+                </div>
+                <div className="pt-2 text-[11px] font-label-md text-[#e06c75] font-semibold border-t border-[#2d3032]">
+                  = ODOR + SCENT (Mùi hôi vẫn còn)
+                </div>
+              </div>
+
+              {/* OME Odor Care */}
+              <div className="bg-[#18191a] p-6 rounded-xl border border-[#003686]/60 space-y-4">
+                <span className="font-label-md text-[10px] text-[#98c379] font-bold uppercase tracking-wider block">
+                  OME ODOR CARE (XỬ LÝ MÙI)
+                </span>
+                <div className="space-y-2 text-xs text-[#b2b5bd]">
+                  <p className="flex items-center space-x-2">
+                    <span className="material-symbols-outlined text-sm text-[#98c379]">check_circle</span>
+                    <span>Bắt giữ phân tử gây mùi trong không khí</span>
+                  </p>
+                  <p className="flex items-center space-x-2">
+                    <span className="material-symbols-outlined text-sm text-[#98c379]">check_circle</span>
+                    <span>Trung hòa & phân hủy cấu trúc mùi</span>
+                  </p>
+                  <p className="flex items-center space-x-2">
+                    <span className="material-symbols-outlined text-sm text-[#98c379]">check_circle</span>
+                    <span>Không khí trở về trạng thái sạch sẽ</span>
+                  </p>
+                </div>
+                <div className="pt-2 text-[11px] font-label-md text-[#98c379] font-semibold border-t border-[#2d3032]">
+                  = NEUTRALIZED NO ODOR (Trả lại sự thuần khiết)
+                </div>
+              </div>
+
+            </div>
+
+            <div className="text-center font-label-md text-xs text-[#a0a4b0] tracking-widest uppercase">
+              • CÔNG NGHỆ BÁM VÀO VÀ PHÂN HỦY PHÂN TỬ MÙI TẠI NGUỒN •
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 5. SOLUTIONS BY SPACE */}
+      <section className="w-full max-w-[1380px] mx-auto px-4 md:px-12 py-16 md:py-24 border-b border-[#e5e2d9]">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+          <div>
+            <span className="font-label-md text-xs tracking-[0.25em] text-[#6b6e77] uppercase">
+              GIẢI PHÁP CHO TỪNG KHÔNG GIAN
+            </span>
+            <h2 className="font-headline text-3xl md:text-4xl font-bold text-[#1b1c1d] mt-1">
+              MỖI KHÔNG GIAN CÓ MỘT NGUỒN MÙI KHÁC NHAU.
+            </h2>
+            <p className="font-body-md text-sm text-[#434653] mt-2 max-w-xl">
+              OME Home được thiết kế cho những tình huống thực tế của đời sống — nơi mùi không xuất hiện giống nhau.
+            </p>
+          </div>
+
+          <div className="flex space-x-2">
+            <button
+              onClick={() => setActiveSpaceIndex((prev) => (prev > 0 ? prev - 1 : spaceSolutions.length - 1))}
+              className="p-2.5 rounded-full border border-[#d8d4c7] hover:bg-[#ebe8e1] transition-colors cursor-pointer"
+              aria-label="Previous space"
+            >
+              <span className="material-symbols-outlined text-xl">arrow_back</span>
+            </button>
+            <button
+              onClick={() => setActiveSpaceIndex((prev) => (prev < spaceSolutions.length - 1 ? prev + 1 : 0))}
+              className="p-2.5 rounded-full border border-[#d8d4c7] hover:bg-[#ebe8e1] transition-colors cursor-pointer"
+              aria-label="Next space"
+            >
+              <span className="material-symbols-outlined text-xl">arrow_forward</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Space Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+          {spaceSolutions.map((space, idx) => {
+            const isSelected = activeSpaceIndex === idx;
+            return (
+              <div
+                key={space.id}
+                onClick={() => setActiveSpaceIndex(idx)}
+                className={`rounded-xl border p-5 flex flex-col justify-between transition-all duration-300 cursor-pointer ${
+                  isSelected
+                    ? 'bg-[#1b1c1d] text-white border-[#1b1c1d] shadow-lg -translate-y-1'
+                    : 'bg-white text-[#1b1c1d] border-[#e5e2d9] hover:border-[#1b1c1d]'
+                }`}
+              >
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className={`font-label-md text-xs font-bold ${isSelected ? 'text-[#e8c872]' : 'text-[#6b6e77]'}`}>
+                      {space.num}
+                    </span>
+                    <span className={`font-label-md text-[10px] px-2 py-0.5 rounded-full uppercase font-semibold ${
+                      isSelected ? 'bg-white/20 text-white' : 'bg-[#f5f4f0] text-[#003686]'
+                    }`}>
+                      Khuyên dùng: {space.recommend}
+                    </span>
+                  </div>
+
+                  <div className="h-32 w-full rounded-lg overflow-hidden my-2">
+                    <img
+                      src={space.image}
+                      alt={space.title}
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                  </div>
+
+                  <h3 className="font-headline text-lg font-bold">
+                    {space.title}
+                  </h3>
+                  <p className={`text-xs font-label-md ${isSelected ? 'text-[#b2b5bd]' : 'text-[#6b6e77]'}`}>
+                    {space.subtitle}
+                  </p>
+                  <p className={`font-body-md text-xs leading-relaxed ${isSelected ? 'text-[#dedad0]' : 'text-[#434653]'}`}>
+                    {space.desc}
+                  </p>
+                </div>
+
+                <div className="pt-4 mt-4 border-t border-current/20 text-right">
+                  <span className="font-label-md text-[11px] font-semibold uppercase tracking-wider underline">
+                    {space.recommend === 'PURE' ? 'Xem dòng PURE' : 'Xem dòng FRESH'} →
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* 6. KHOA HỌC, ĐỂ KHÔNG GIAN ĐƯỢC NHẸ ĐI. / SCIENCE, MADE INVISIBLE */}
+      <section className="w-full max-w-[1380px] mx-auto px-4 md:px-12 py-16 md:py-24 border-b border-[#e5e2d9]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <div className="lg:col-span-5 space-y-6">
+            <span className="font-label-md text-xs tracking-[0.25em] text-[#6b6e77] uppercase">
+              SCIENCE & TECHNOLOGY
+            </span>
+            <h2 className="font-headline text-3xl md:text-4xl font-bold text-[#1b1c1d] leading-tight">
+              KHOA HỌC, ĐỂ KHÔNG GIAN ĐƯỢC NHẸ ĐI.
+            </h2>
+            <p className="font-body-md text-sm text-[#434653] leading-relaxed">
+              Phía sau trải nghiệm tối giản của OME là tư duy xây dựng công thức dựa trên cơ chế kiểm soát phân tử mùi. Thay vì chỉ tăng cường hương thơm tổng hợp, hệ thống định hướng tương tác trực tiếp với các hợp chất gây mùi trong không khí.
+            </p>
+
+            <div className="space-y-4 pt-2">
+              <div className="flex items-start space-x-3">
+                <span className="material-symbols-outlined text-xl text-[#1b1c1d] mt-0.5">science</span>
+                <div>
+                  <h4 className="font-label-md text-xs font-bold text-[#1b1c1d] uppercase">01. NHẬN DIỆN MOLECULAR TARGETING</h4>
+                  <p className="text-xs text-[#6b6e77]">Smart molecules xác định đúng vị trí phân tử mùi hôi trong không gian.</p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-3">
+                <span className="material-symbols-outlined text-xl text-[#1b1c1d] mt-0.5">filter_center_focus</span>
+                <div>
+                  <h4 className="font-label-md text-xs font-bold text-[#1b1c1d] uppercase">02. TƯƠNG TÁC NEUTRALIZATION</h4>
+                  <p className="text-xs text-[#6b6e77]">Các hoạt chất trung hòa phản ứng hóa học bám chặt và liên kết phân tử hôi.</p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-3">
+                <span className="material-symbols-outlined text-xl text-[#1b1c1d] mt-0.5">autorenew</span>
+                <div>
+                  <h4 className="font-label-md text-xs font-bold text-[#1b1c1d] uppercase">03. CÂN BẰNG RESET AIR</h4>
+                  <p className="text-xs text-[#6b6e77]">Phân tử mùi bị phá hủy, trả lại bầu không khí trong lành tự nhiên.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <button
+                onClick={() => setActiveTab('technology')}
+                className="bg-[#1b1c1d] text-white font-label-md text-xs font-semibold px-6 py-3 rounded-xs hover:bg-[#333] transition-colors uppercase tracking-widest cursor-pointer"
+              >
+                KHÁM PHÁ CÔNG NGHỆ OME
+              </button>
+            </div>
+          </div>
+
+          <div className="lg:col-span-7 bg-[#f0eee6] rounded-2xl border border-[#dedad0] p-8 md:p-12 flex flex-col justify-between space-y-8">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+              <div className="p-4 bg-white rounded-xl border border-[#dedad0] space-y-2">
+                <span className="material-symbols-outlined text-3xl text-[#1b1c1d]">biotech</span>
+                <p className="font-label-md text-xs font-bold text-[#1b1c1d]">KIỂM SOÁT TỪ GỐC</p>
+                <p className="text-[10px] text-[#6b6e77]">Tập trung vào phân tử hôi</p>
+              </div>
+
+              <div className="p-4 bg-white rounded-xl border border-[#dedad0] space-y-2">
+                <span className="material-symbols-outlined text-3xl text-[#1b1c1d]">do_not_touch</span>
+                <p className="font-label-md text-xs font-bold text-[#1b1c1d]">KHÔNG CHE PHỦ</p>
+                <p className="text-[10px] text-[#6b6e77]">Không thêm mùi nồng gắt</p>
+              </div>
+
+              <div className="p-4 bg-white rounded-xl border border-[#dedad0] space-y-2">
+                <span className="material-symbols-outlined text-3xl text-[#1b1c1d]">verified_user</span>
+                <p className="font-label-md text-xs font-bold text-[#1b1c1d]">AN TOÀN TUYỆT ĐỐI</p>
+                <p className="text-[10px] text-[#6b6e77]">Cho trẻ nhỏ & thú cưng</p>
+              </div>
+
+              <div className="p-4 bg-white rounded-xl border border-[#dedad0] space-y-2">
+                <span className="material-symbols-outlined text-3xl text-[#1b1c1d]">deck</span>
+                <p className="font-label-md text-xs font-bold text-[#1b1c1d]">THIẾT KẾ TỐI GIẢN</p>
+                <p className="text-[10px] text-[#6b6e77]">Tinh tế mọi nội thất</p>
+              </div>
+            </div>
+
+            <div className="p-6 bg-white rounded-xl border border-[#dedad0] text-center space-y-2">
+              <p className="font-headline text-lg font-bold text-[#1b1c1d]">
+                "Mọi chi tiết trong OME Home đều được chắt lọc để mang tới cảm giác thư thái thực sự."
+              </p>
+              <p className="font-label-md text-xs text-[#6b6e77] uppercase tracking-wider">
+                — OME Home Research & Design Team
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 7. CUSTOMER TESTIMONIALS */}
+      <section className="w-full max-w-[1380px] mx-auto px-4 md:px-12 py-16 md:py-24 border-b border-[#e5e2d9]">
+        <div className="text-center max-w-xl mx-auto mb-12 space-y-2">
+          <span className="font-label-md text-xs tracking-[0.25em] text-[#6b6e77] uppercase">
+            TRẢI NGHIỆM THỰC TẾ
+          </span>
+          <h2 className="font-headline text-3xl font-bold text-[#1b1c1d]">
+            CẢM NHẬN TỪ KHÁCH HÀNG
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white p-8 rounded-xl border border-[#e5e2d9] space-y-4 shadow-xs">
+            <div className="flex text-[#f59e0b]">
+              {"★".repeat(5)}
+            </div>
+            <p className="font-body-md text-sm text-[#434653] italic leading-relaxed">
+              "Bếp nhà mình sau khi chiên cá hay nấu lẩu ám mùi rất lâu. Dùng OME Home Pure xịt 2-3 xịt là mùi biến mất hoàn toàn mà không bị vương lại mùi hóa chất nào. Thật sự bất ngờ!"
+            </p>
+            <div>
+              <p className="font-label-md text-xs font-bold text-[#1b1c1d]">Minh Anh</p>
+              <p className="text-xs text-[#6b6e77]">Hà Nội • Khách dùng OME Pure</p>
+            </div>
+          </div>
+
+          <div className="bg-white p-8 rounded-xl border border-[#e5e2d9] space-y-4 shadow-xs">
+            <div className="flex text-[#f59e0b]">
+              {"★".repeat(5)}
+            </div>
+            <p className="font-body-md text-sm text-[#434653] italic leading-relaxed">
+              "Dòng OME Fresh có mùi thơm cực kỳ sang và dịu. Khác hẳn mấy chai xịt phòng siêu thị nồng gắt làm mình nhức đầu. Nhà có nuôi 2 em mèo mà phòng lúc nào cũng thoáng mát."
+            </p>
+            <div>
+              <p className="font-label-md text-xs font-bold text-[#1b1c1d]">Quốc Bảo</p>
+              <p className="text-xs text-[#6b6e77]">TP. Hồ Chí Minh • Khách dùng OME Fresh</p>
+            </div>
+          </div>
+
+          <div className="bg-white p-8 rounded-xl border border-[#e5e2d9] space-y-4 shadow-xs">
+            <div className="flex text-[#f59e0b]">
+              {"★".repeat(5)}
+            </div>
+            <p className="font-body-md text-sm text-[#434653] italic leading-relaxed">
+              "Thiết kế chai xịt tối giản để trên bàn phòng khách trông như đồ decor cao cấp. Đặt hàng qua Zalo tư vấn nhiệt tình, giao hàng Hà Nội nhanh chóng!"
+            </p>
+            <div>
+              <p className="font-label-md text-xs font-bold text-[#1b1c1d]">Thanh Trúc</p>
+              <p className="text-xs text-[#6b6e77]">Đà Nẵng • Khách hàng thân thiết</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 8. CALL TO ACTION & SOCIAL ORDER */}
+      <section className="w-full bg-[#f0eee6] py-16 md:py-20 text-center border-b border-[#e5e2d9]">
+        <div className="max-w-2xl mx-auto px-4 space-y-6">
+          <span className="font-label-md text-xs tracking-[0.25em] text-[#6b6e77] uppercase">
+            SẴN SÀNG CHO KHÔNG GIAN SẠCH TỰ NHIÊN?
+          </span>
+          <h2 className="font-headline text-3xl md:text-4xl font-bold text-[#1b1c1d]">
+            ĐẶT HÀNG TRỰC TIẾP QUA OME HOME
+          </h2>
+          <p className="font-body-md text-sm text-[#434653]">
+            Liên hệ Zalo, Facebook Messenger, Instagram Direct hoặc Email chính thức của OME Home để được tư vấn chọn dòng xịt phù hợp nhất.
+          </p>
+          <div>
+            <button
+              onClick={onOpenOrderModal}
+              className="bg-[#1b1c1d] text-white font-label-md text-xs font-semibold px-8 py-4 rounded-xs hover:bg-[#333] transition-colors uppercase tracking-widest cursor-pointer shadow-md"
+            >
+              MUA NGAY QUA ZALO & MESSENGER
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
